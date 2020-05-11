@@ -1,5 +1,5 @@
-/************
-*GAME RULES:
+/*
+GAME RULES:
 
 - The game has 2 players, playing in rounds
 - In each turn, a player rolls a dice as many times as he whishes. Each result get added to his ROUND score
@@ -13,21 +13,19 @@ var scores, roundScores, activePlayer, gamePlaying;
 
 init();
 
-var lastDice;
-
 document.querySelector('.btn-roll').addEventListener('click', function(){
     if (gamePlaying){
-          // 1. Random number
-    var dice1 = Math.floor(Math.random() *6) + 1;
+        // 1. Random number
+        dice = Math.floor(Math.random() *6) + 1;
     
     // 2. Display result
-    document.getElementById('dice-1').style.display = 'block';
-    document.getElementById('dice-1').src = 'dice-' + dice1 + '.png';
-
+    var diceDOM = document.querySelector('.dice');
+    diceDOM.style.display = 'block';
+    diceDOM.src = 'dice-' + dice + '.png';
     
     
     //3. Undate the round sore IF the rolled number was not 1
-            if (dice1 !== 1 && dice2 !== 1){
+    if (dice !== 1){
         // Add Score
         roundScore += dice;
         document.querySelector('#current-'+ activePlayer).textContent = roundScore;
@@ -37,25 +35,7 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
     }
     } 
 });
-        /*
-        if (dice === 6 && lastDice === 6){
-        // player looses score
-            scores[activePlayer] = 0;
-            document.querySelector('#score-' + activePlayer).textContent = '0';
-            nextPlayer();
-        } else if (dice !== 1){
-        // Add Score
-        roundScore += dice;
-        document.querySelector('#current-'+ activePlayer).textContent = roundScore;
-        } else  {
-        // Next player
-        nextPlayer();
-        }
-        lastDice = dice;
-    } 
-    
-});
-*/
+
 document.querySelector('.btn-hold').addEventListener('click', function(){
     if (gamePlaying){
     // Add current score to global score
@@ -64,20 +44,11 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
     // Update the UI 
     document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
     
-    var input = document.querySelector('.final-score').value;
-        
-    // Undefined, 0, null or ""are coerced to false
-        
-    if (input){
-        var winningScore = input;
-    } else {
-        winningScore = 100;
-    }
+
     // Check if the player won the game
-    if (scores[activePlayer] >= winningScore) {
+    if (scores[activePlayer] >= 100) {
         document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
-        document.getElementById('dice-1').style.display = 'none';
-        
+        document.querySelector('.dice').style.display = 'none';
         document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
         document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
         gamePlaying = false;
@@ -98,11 +69,10 @@ function nextPlayer(){
         document.querySelector('.player-0-panel').classList.toggle('active');
         document.querySelector('.player-1-panel').classList.toggle('active');
         
-        document.querySelector('.player-0-panel').classList.remove('active');
-        document.querySelector('.player-0-panel').classList.add('active');
+        //document.querySelector('.player-0-panel').classList.remove('active');
+        //document.querySelector('.player-0-panel').classList.add('active');
         
-        document.getElementById('dice-1').style.display = 'none';
-    
+        document.querySelector('.dice').style.display = 'none';
     
 }
 
@@ -114,8 +84,7 @@ function init(){
     activePlayer = 0;
     gamePlaying = true;
     
-    document.getElementById('dice-1').style.display = 'none';
-    
+    document.querySelector('.dice').style.display = 'none';
 
     document.getElementById('score-0').textContent = '0';
     document.getElementById('score-1').textContent = '0';
@@ -133,15 +102,9 @@ function init(){
 
 
 
+//
+//var x = document.querySelector('#score-0').textContent;
+//console.log(x);
 
 
 
-
-        
-        
-        
-        
-        
-        
-        
-        
